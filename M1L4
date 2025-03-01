@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+import random
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -8,14 +9,38 @@ bot = commands.Bot(command_prefix='$', intents=intents)
 
 @bot.event
 async def on_ready():
-    print(f'We have logged in as {bot.user}')
+    print(f'We have logged in as {bot.user}')  # Se corrigió el formato de la f-string
 
+# Comando para saludar
 @bot.command()
 async def hello(ctx):
     await ctx.send(f'Hola, soy un bot {bot.user}!')
 
+# Comando para repetir "he"
 @bot.command()
-async def heh(ctx, count_heh = 5):
+async def heh(ctx, count_heh=5):
     await ctx.send("he" * count_heh)
 
+# Comando de charla sobre Godzilla
+@bot.command()
+async def talk_godzilla(ctx):
+    preguntas = [
+        "¿Sabías que Godzilla es conocido como el Rey de los Monstruos?",
+        "¿Cuál es tu titan favorito de Godzilla?",
+        "Godzilla tiene la capacidad de destruir ciudades con su aliento atómico. ¿Qué opinas de eso?",
+        "King Kong luchó contra Godzilla, ¿quién crees que ganaría?"
+    ]
+    # Escoge una pregunta al azar
+    respuesta = random.choice(preguntas)
+    await ctx.send(respuesta)  # Envia la pregunta seleccionada
+
+# Comando para repetir un mensaje
+@bot.command()
+async def repetir(ctx, *, mensaje: str):  # Capturamos el mensaje completo con *mensaje
+    await ctx.send(mensaje)
+
+
+
+
 bot.run("token")
+
